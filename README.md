@@ -2,9 +2,7 @@
 
 Official implementation of the **ACM MM 2023** paper **DUSA: Decoupled Unsupervised Sim2Real Adaptation for Vehicle-to-Everything Collaborative Perception** [[Link]](https://dl.acm.org/doi/10.1145/3581783.3611948).
 
-<div align="center">
-  <img src="images/dusa.png" width="800"/>
-</div>
+<div align="center"><img src="images/dusa.png" width="800"/></div>
 
 ## News
 
@@ -79,9 +77,7 @@ You may also refer to [data introduction](https://opencood.readthedocs.io/en/lat
 
 ### Data Sequence Visualization
 
-To quickly visualize the LiDAR stream in the OPV2V dataset, first modify the `validate_dir`
-in your `opencood/hypes_yaml/visualization.yaml` to the OPV2V data path on your local machine, e.g. `opv2v/validate`,
-and the run the following commond:
+To quickly visualize the LiDAR stream in the OPV2V dataset, first modify the `validate_dir` in your `opencood/hypes_yaml/visualization.yaml` to the OPV2V data path on your local machine, e.g. `opv2v/validate`, and then run the following command:
 
 ```python
 cd ~/DUSA
@@ -94,8 +90,7 @@ Arguments Explanation:
 
 ### Training
 
-DUSA uses yaml file to configure most of the parameters for training. To train your own model
-from scratch or a continued checkpoint, run the following commonds:
+DUSA uses yaml file to configure most of the parameters for training. To train your own model from scratch or a specific checkpoint, run the following commands:
 
 ```sh
 python opencood/tools/train.py --hypes_yaml ${CONFIG_FILE} [--model_dir  ${CHECKPOINT_FOLDER} --half --adv_training --target_domain_suffix ${TARGET_DOMAIN} --use_pseudo_label --pseudo_label_id ${ID}]
@@ -103,10 +98,8 @@ python opencood/tools/train.py --hypes_yaml ${CONFIG_FILE} [--model_dir  ${CHECK
 
 Arguments Explanation:
 
-- `hypes_yaml`: the path of the training configuration file, e.g. `opencood/hypes_yaml/second_early_fusion.yaml`, meaning you want to train
-an early fusion model which utilizes SECOND as the backbone. See [Tutorial 1: Config System](https://opencood.readthedocs.io/en/latest/md_files/config_tutorial.html) to learn more about the rules of the yaml files.
-- `model_dir` (optional) : the path of the checkpoints. This is used to fine-tune the trained models. When the `model_dir` is
-given, the trainer will discard the `hypes_yaml` and load the `config.yaml` in the checkpoint folder.
+- `hypes_yaml`: the path of the training configuration file, e.g. `opencood/hypes_yaml/second_early_fusion.yaml`, meaning you want to train an early fusion model which utilizes SECOND as the backbone. See [Tutorial 1: Config System](https://opencood.readthedocs.io/en/latest/md_files/config_tutorial.html) to learn more about the rules of the yaml files.
+- `model_dir` (optional) : the path of the checkpoints. This is used to fine-tune the trained models. When the `model_dir` is given, the trainer will discard the `hypes_yaml` and load the `config.yaml` in the checkpoint folder.
 - `half` (optional): If set, the model will be trained with half precision. It cannot be set with multi-gpu training togetger.
 - `adv_training` (optional): If set, the model will be trained with adversarial training.
 - `target_domain_suffix` (optional): Yaml filename suffix of the target domain of adversarial training. Default: `dair`.
@@ -121,8 +114,7 @@ CUDA_VISIBLE_DEVICES="0,1,2,3" python -m torch.distributed.launch --nproc_per_no
 
 ### Inference
 
-Before you run the following command, first make sure the `validation_dir` in config.yaml under your checkpoint folder
-refers to the testing dataset path, e.g. `opv2v_data_dumping/test`.
+Before you run the following command, first make sure the `validation_dir` in config.yaml under your checkpoint folder refers to the testing dataset path, e.g. `opv2v_data_dumping/test`.
 
 ```sh
 python opencood/tools/inference.py --model_dir ${CHECKPOINT_FOLDER} --fusion_method ${FUSION_STRATEGY} [--show_vis] [--show_sequence] [--save_pseudo_label] [--pseudo_label_id ${ID}]
